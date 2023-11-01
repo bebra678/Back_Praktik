@@ -501,6 +501,6 @@ img {
         <?php
         }
         ?>
-        <div class="block"><a href="<?= app()->route->getUrl('/dis') ?>">Дисциплины</a></div>
+        <div class="block"><a href="<?= app()->route->getUrl('/sot') ?>">Сотрудники</a></div>
 </body>
 </html>

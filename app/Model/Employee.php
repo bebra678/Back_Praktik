@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-   use HasFactory;
-   public $timestamps = false;
-   protected $fillable = [
+    use HasFactory;
+    public $timestamps = false;
+    protected $fillable =
+    [
        'id ',
        'first_name',
        'name',
@@ -19,5 +20,13 @@ class Employee extends Model
        'address',
        'id_subdivision',
        'id_position',
+       'photo',
     ];
+    public function photo($img)
+    {
+        $photo = time().$img['name'] ;
+        $this->photo = $photo;
+        //var_dump($_SERVER['DOCUMENT_ROOT']. '/pop-it-mvc/public/img/' . $photo); die();
+        move_uploaded_file($img['tmp_name'], $_SERVER['DOCUMENT_ROOT']. '/public/img/' . $photo);
+    }
 }

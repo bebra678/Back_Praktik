@@ -11,7 +11,12 @@ return [
    ],
    'validators' => [
         'required' => \Validators\RequireValidator::class,
-        'unique' => \Validators\UniqueValidator::class
+        'unique' => \Validators\UniqueValidator::class,
+       'number' => \Validators\NumbersValidator::class,
+       'cyrillic' => \Validators\CyrillicValidator::class,
+       'all' => \Validators\AllValidator::class,
+       'image' => \Validators\ImageValidator::class,
+       'latinNumber' => \Validators\LatinNumberValidator::class,
    ],
    'routeAppMiddleware' => [
     'csrf' => \Middlewares\CSRFMiddleware::class,

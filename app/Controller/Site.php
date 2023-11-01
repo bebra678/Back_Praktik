@@ -38,8 +38,8 @@ class Site
               'login' => ['required', 'unique:users,login'],
               'password' => ['required']
           ], [
-              'required' => 'Поле :field пусто',
-              'unique' => 'Поле :field должно быть уникально'
+              'required' => 'пїЅпїЅпїЅпїЅ :field пїЅпїЅпїЅпїЅпїЅ',
+              'unique' => 'пїЅпїЅпїЅпїЅ :field пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ'
           ]);
    
           if($validator->fails()){
@@ -56,16 +56,16 @@ class Site
    
     public function login(Request $request): string
     {
-        //Если просто обращение к странице, то отобразить форму
+        //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         if ($request->method === 'GET') {
             return new View('site.login');
         }
-    //Если удалось аутентифицировать пользователя, то редирект
+    //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (Auth::attempt($request->all())) {
             app()->route->redirect('/glav');
         }
-        //Если аутентификация не удалась, то сообщение об ошибке
-        return new View('site.login', ['message' => 'Неправильные логин или пароль']);
+        //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        return new View('site.login', ['message' => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ']);
     }
 
     public function logout(): void
@@ -142,7 +142,7 @@ class Site
             {
                 $id = $request->id;
                 $emp_dis = Emp_dis::where('id_dis', $id)->get();
-                return (new View())->render('site.dis_check', ['emp_dis' => $emp_dis ,'emp_dis1' => $emp_dis1, 'id' => $id, 'employees' => $employees, 'subdivisions' => $subdivisions, 'positions' => $positions]);
+                return (new View())->render('site.dis_check', ['emp_dis' => $emp_dis, 'id' => $id, 'employees' => $employees, 'subdivisions' => $subdivisions, 'positions' => $positions]);
             }
         }
         return (new View())->render('site.pod', ['pod_dis1' => $pod_dis1,'employees' => $employees, 'disciplines' => $disciplines, 'subdivisions' => $subdivisions]);
@@ -185,37 +185,52 @@ class Site
         $employees = Employee::all();
         if(!empty($_GET["radio"]))
         {
-            if($_GET['radio'] != 'Все')
+            if($_GET['radio'] != 'пїЅпїЅпїЅ')
             {
                 $id = $_GET["radio"];
                 $employees = Employee::where('id_subdivision', $id)->get();
             }
             //var_dump($_GET['radio']);
         }
-        if($request->method === 'POST')
+        elseif($request->method === 'POST')
         {
             if($request->type_post === 'search')
             {
-                $data = $request->data;
-                $data_fio[0] = 'Пусто';
-                foreach($employees as $el)
+                $validator = new Validator($request->all(),
+                [
+                    'data' => ['required', 'cyrillic'],
+                ],
+                [
+                    'required' => 'пїЅпїЅпїЅпїЅ :field пїЅпїЅпїЅпїЅпїЅ',
+                    'cyrillic' => 'пїЅпїЅпїЅпїЅ :field пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ',
+                ]);
+                if($validator->fails())
                 {
-                    $data_fio[] = $el->first_name . ' ' . $el->name . ' ' . $el->second_name;
-                }
-                for($i = 1; $i < count($data_fio); $i++)
-                {
-                    if(str_contains($data_fio[$i], $data))
-                    {
-                        $emp = Employee::where('id', $i)->get();
-                    }
-                }
-                if(empty($emp))
-                {
-                    return (new View())->render('site.search');
+                    return new View('site.sot', ['message' => $validator->errors(), 'employees' => $employees, 'subdivisions' => $subdivisions, 'positions' => $positions]);
                 }
                 else
                 {
-                    return (new View())->render('site.search', ['emp' => $emp, 'subdivisions' => $subdivisions, 'positions' => $positions]);
+                    $data = $request->data;
+                    $data_fio[0] = 'пїЅпїЅпїЅпїЅпїЅ';
+                    foreach($employees as $el)
+                    {
+                        $data_fio[] = $el->first_name . ' ' . $el->name . ' ' . $el->second_name;
+                    }
+                    for($i = 1; $i < count($data_fio); $i++)
+                    {
+                        if(str_contains($data_fio[$i], $data))
+                        {
+                            $emp = Employee::where('id', $i)->get();
+                        }
+                    }
+                    if(empty($emp))
+                    {
+                        return (new View())->render('site.search');
+                    }
+                    else
+                    {
+                        return (new View())->render('site.search', ['emp' => $emp, 'subdivisions' => $subdivisions, 'positions' => $positions]);
+                    }
                 }
             }
         }
@@ -224,12 +239,39 @@ class Site
 
     public function add_sot(Request $request): string
     {
-        if ($request->method === 'POST') {
+        if ($request->method === 'POST')
+        {
+            $validator = new Validator($request->all(),
+            [
+                'first_name' => ['required', 'cyrillic'],
+                'name' => ['required', 'cyrillic'],
+                'second_name' => ['required', 'cyrillic'],
+                'sex' => ['required', 'cyrillic'],
+                'date' => ['required'],
+                'address' => ['required'],
+                'id_subdivision' => ['required', 'number'],
+                'id_position' => ['required', 'number'],
+                'photo' => ['required', 'image'],
+            ],
+            [
+                'required' => 'пїЅпїЅпїЅпїЅ :field пїЅпїЅпїЅпїЅпїЅ',
+                'cyrillic' => 'пїЅпїЅпїЅпїЅ :field пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ',
+                'latinNumber' => 'пїЅпїЅпїЅпїЅ :field пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ',
+                'number' => 'пїЅпїЅпїЅпїЅ :field пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ',
+                'image' => 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ: jpeg,png,webp',
+            ]);
 
-            $employee = Employee::create($request->all());
-            //$employee->photo($_FILES['photo']);
-            $employee->save();
-            app()->route->redirect('/sot');
+            if($validator->fails())
+            {
+                return new View('site.add_sot', ['message' => $validator->errors()]);
+            }
+            else
+            {
+                $employee = Employee::create($request->all());
+                $employee->photo($_FILES['photo']);
+                $employee->save();
+                app()->route->redirect('/sot');
+            }
         }
         return new View('site.add_sot');
     }
@@ -269,7 +311,7 @@ class Site
 //    $employees = Employee::all();
 //    if(!empty($_GET["radio"]))
 //    {
-//        if($_GET['radio'] != 'Все')
+//        if($_GET['radio'] != 'пїЅпїЅпїЅ')
 //        {
 //            $id = $_GET["radio"];
 //            $employees = Employee::where('id_subdivision', $id)->get();
@@ -281,10 +323,10 @@ class Site
 //        if($request->type_post === 'search')
 //        {
 //            $data = $request->data;
-//            $data_fio[0] = 'Пусто';
+//            $data_fio[0] = 'пїЅпїЅпїЅпїЅпїЅ';
 //            if(!empty($_GET["radio"]))
 //            {
-//                if ($_GET['radio'] != 'Все')
+//                if ($_GET['radio'] != 'пїЅпїЅпїЅ')
 //                {
 //                    $emp_for = Employee::where('id_subdivision', $id)->get();
 //                    foreach ($emp_for as $el)

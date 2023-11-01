@@ -535,3 +535,11 @@ img {
     <div class="nazad"><a href="<?= app()->route->getUrl('/glav') ?>">Назад</a></div>
 </body>
 </html>
+
+
+
+
+
+
+
+

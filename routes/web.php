@@ -12,11 +12,11 @@ Route::add('GET', '/glav', [Controller\Site::class, 'glav'])
 Route::add(['GET','POST'], '/dis', [Controller\Site::class, 'dis'])
 ->middleware('auth');
 Route::add(['GET','POST'], '/check', [Controller\Site::class, 'check'])
-->middleware('auth');
+->middleware('admin');
 Route::add(['GET', 'POST'], '/pod', [Controller\Site::class, 'pod'])
-->middleware('auth');
+->middleware('admin');
 Route::add(['GET', 'POST'], '/sot', [Controller\Site::class, 'sot'])
-->middleware('auth', 'admin');
+->middleware('auth');
 Route::add(['GET','POST'], '/add_sot', [Controller\Site::class, 'add_sot'])
     ->middleware('admin');
 Route::add('GET', '/dis_check', [Controller\Site::class, 'dis_check'])

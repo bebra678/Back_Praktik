@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="utf-5">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
@@ -497,14 +497,23 @@
             <h2>Добавление сотрудника</h2>
             <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/><br>
             <input type="text" id="first_name" placeholder="фамилия" name="first_name"/><br>
+                <p class="Error"><?= $message['first_name'][0] ?? ''; ?></p>
             <input type="text" id="name" placeholder="имя" name="name"/><br>
+                <p class="Error"><?= $message['name'][0] ?? ''; ?></p>
             <input type="text" id="second_name" placeholder="отчество" name="second_name"/><br>
+                <p class="Error"><?= $message['second_name'][0] ?? ''; ?></p>
             <input type="text" id="sex" placeholder="пол" name="sex"/><br>
+                <p class="Error"><?= $message['sex'][0] ?? ''; ?></p>
             <input type="date" id="date" placeholder="дата рождения" name="date"/><br>
+                <p class="Error"><?= $message['date'][0] ?? ''; ?></p>
             <input type="text" id="address" placeholder="адрес прописки" name="address"/><br>
+                <p class="Error"><?= $message['address'][0] ?? ''; ?></p>
             <input type="number" id="id_subdivision" placeholder="подразделение" name="id_subdivision"/><br>
+                <p class="Error"><?= $message['id_subdivision'][0] ?? ''; ?></p>
             <input type="number" id="id_position" placeholder="должность" name="id_position"/><br>
+                <p class="Error"><?= $message['id_position'][0] ?? ''; ?></p>
             <input type="file" id="photo" name="photo"/><br>
+                <p class="Error"><?= $message['photo'][0] ?? ''; ?></p>
             <br><button class="form_submit">Добавить</button>
         </form>
     </div>

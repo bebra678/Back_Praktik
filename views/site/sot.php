@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="utf-5">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
@@ -497,7 +497,8 @@
     <form action="" method="GET">
         <input type="radio" id="0" name="radio" value="0">
         <label for="0">Все сотрудники</label>
-        <?php foreach($subdivisions as $el) { ?>
+        <?php
+        foreach($subdivisions as $el) { ?>
             <input type="radio" id="<?= $el->id ?>" name="radio" value="<?= $el->id ?>">
             <label for="<?= $el->id ?>"><?= $el->name ?></label>
         <?php } ?>
@@ -507,6 +508,7 @@
     <form action="" method="post" class="login-form" enctype="multipart/form-data">
         <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/><br>
         <input id="data" name="data" type="text" placeholder="Поиск по ФИО"/>
+            <p class="Error"><?= $message['data'][0] ?? ''; ?></p>
         <input name="type_post" type="hidden" value="search"/><br>
         <br><button value="search">Найти</button>
     </form>
@@ -528,7 +530,7 @@
         foreach ($employees as $el)
         { ?>
             <div class="people">
-                <img src="https://static.wikia.nocookie.net/samosbors8878/images/b/b3/Anonymous.svg.png/revision/latest?cb=20220925153204&path-prefix=ru">
+                <img src="/public/img/<?= $el->photo ?>">
                 <div class="text">
                     <p class="text1"><?php echo $el->first_name . ' ' . $el->name . ' ' . $el->second_name ?></p>
                     <p class="text2">Подразделение: <?php echo $all_sub[$el->id_subdivision] ?></p>
@@ -536,7 +538,6 @@
                     <p class="text2">Пол: <?php echo $el->sex ?></p>
                     <p class="text2">Дата рождения: <?php echo $el->date ?></p>
                     <p class="text2">Адрес прописки: <?php echo $el->address ?></p>
-<!--                    --><?php //$all_emp[] =  ?>
                 </div>
             </div>
             <?php
