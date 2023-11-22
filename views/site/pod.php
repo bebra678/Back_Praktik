@@ -415,7 +415,7 @@ img {
 }
 
 .nazad {
-    background-color: #868686;
+    background-color: blue;
     width: 400px;
     height: 90px;
     color: white;
@@ -440,6 +440,7 @@ img {
     font-size: 30px;
     text-decoration: none;
     color: white;
+
 }
 
 .block6:active {
@@ -453,7 +454,7 @@ img {
 }
 
 .nazad:active {
-    background-color: #1E4FFF;
+    background-color: red;
     color: white;
 }
 
@@ -504,7 +505,7 @@ img {
         <?php }
     ?>
 
-    ?>
+
 
     <p class="text66">Дисциплины, которые смотрят подразделения:</p>
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <title>Сотрудники</title>
     <style type="text/css">
@@ -114,10 +115,10 @@
         /* сотрудники */
         .back {
             width: 1600px;
-            min-height: 1100px;
+            min-height: 1290px;
             margin-left: auto;
             margin-right: auto;
-            background-color: white;
+            background-color: #3394de;
         }
 
         .block3_1{
@@ -162,7 +163,7 @@
         }
 
         .block4 {
-            border: 1px solid #868686;
+            border: 4px solid #868686;
             width: 1200px;
             min-height: 800px;
             border-radius: 14px;
@@ -205,11 +206,15 @@
         }
 
         .people {
-            min-width: 630px;
-            height: 210px;
+            background: white;
+            min-width: 700px;
+            height: 330px;
             float: left;
             margin-top: 30px;
-            margin-left: 30px;
+            margin-left: 30px;b
+            border:6px solid black;
+            border-radius: 25px;
+
         }
 
         img {
@@ -488,6 +493,12 @@
         .pod:active {
             background-color: #577CFF;
         }
+        #nat{
+            width: 150px;
+        }
+        #0 {
+            column-count: 3;
+        }
     </style>
 </head>
 <body>
@@ -495,22 +506,22 @@
     <div class="top"><p>Учебно-методическое управление</p></div>
 
     <form action="" method="GET">
-        <input type="radio" id="0" name="radio" value="0">
+        <input  type="radio" id="0" name="radio" value="0">
         <label for="0">Все сотрудники</label>
         <?php
         foreach($subdivisions as $el) { ?>
             <input type="radio" id="<?= $el->id ?>" name="radio" value="<?= $el->id ?>">
             <label for="<?= $el->id ?>"><?= $el->name ?></label>
         <?php } ?>
-        <br><input type="submit">
+        <br><input class="btn btn-primary" type="submit">
     </form>
 
     <form action="" method="post" class="login-form" enctype="multipart/form-data">
         <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/><br>
-        <input id="data" name="data" type="text" placeholder="Поиск по ФИО"/>
+        <input class="input-group-text" id="data" name="data" type="text" placeholder="Поиск по ФИО"/>
             <p class="Error"><?= $message['data'][0] ?? ''; ?></p>
         <input name="type_post" type="hidden" value="search"/><br>
-        <br><button value="search">Найти</button>
+        <br><button id="nat" class="btn btn-warning" value="search">Найти</button>
     </form>
 
     <div class="block4">

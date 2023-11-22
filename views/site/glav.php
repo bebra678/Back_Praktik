@@ -498,9 +498,12 @@ img {
             <div class="block1"><a href="<?= app()->route->getUrl('/sot') ?>">Сотрудники</a></div>
             <div class="block"><a href="<?= app()->route->getUrl('/pod') ?>">Подразделения</a></div>
             <div class="block"><a href="<?= app()->route->getUrl('/add_sot') ?>">Добавить сотрудника</a></div>
+            <div class="block"><a href="<?= app()->route->getUrl('/dis') ?>">Дисциплины</a></div>
         <?php
         }
+        else {
         ?>
-        <div class="block"><a href="<?= app()->route->getUrl('/sot') ?>">Сотрудники</a></div>
+            <div class="block"><a href="<?= app()->route->getUrl('/dis') ?>">Дисциплины</a></div>
+        <?php } ?>
 </body>
 </html>
